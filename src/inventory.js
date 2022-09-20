@@ -14,6 +14,43 @@ export default class Inventory {
     });
   }
 
+  modifyProduct(productCode) {
+    for (let i = 0; i <= this.products.length; i++) {
+      if (productCode === this.products[i].code) {
+        Swal.fire({
+          customClass: {
+            confirmButton: "swalBtnColor",
+          },
+          title: "MODIFICAR PRODUCTO",
+          icon: "question",
+          html: `<input type="text" id="nameProduct" class="swal2-input" placeholder="Nombre del producto">
+          <input type="text" id="quantityProduct" class="swal2-input" placeholder="Cantidad">
+          <input type="text" id="costProduct" class="swal2-input" placeholder="Costo">`,
+          confirmButtonText: "Modificar Producto",
+          focusConfirm: false,
+          preConfirm: () => {
+            let nameProduct =
+              Swal.getPopup().querySelector("#nameProduct").value;
+            let quantityProduct =
+              Swal.getPopup().querySelector("#quantityProduct").value;
+            let costProduct =
+              Swal.getPopup().querySelector("#costProduct").value;
+
+            if (!nameProduct || !quantityProduct || !costProduct) {
+              Swal.showValidationMessage(
+                `Por favor, ingrese los datos correctamente`
+              );
+            }
+
+            this.products[i].name = nameProduct;
+            this.products[i].quantity = quantityProduct;
+            this.products[i].cost = costProduct;
+          },
+        });
+      }
+    }
+  }
+
   showNormalList() {
     let component = "";
 

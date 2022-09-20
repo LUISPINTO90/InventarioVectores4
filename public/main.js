@@ -37,6 +37,33 @@ document.getElementById("btnAddElement").addEventListener("click", () => {
 });
 
 //  Modify Product
+document.getElementById("btnModElement").addEventListener("click", () => {
+  let productList = document.getElementById("productList");
+  let productCodeToModify = document.getElementById(
+    "productCodeToModify"
+  ).value;
+
+  if (productCodeToModify == "" || productList.innerHTML == "") {
+    Swal.fire({
+      customClass: {
+        confirmButton: "swalBtnColor",
+      },
+      title: "ERROR",
+      text: "Ingresa los campos correctamente",
+      icon: "error",
+    });
+  } else {
+    actions.innerHTML += `
+      <div class="card">
+        <p>Se ha <b>MODIFICADO</b> un producto</p>
+      </div>
+    `;
+
+    inventory.modifyProduct(productCodeToModify);
+
+    document.getElementById("formDelete").reset();
+  }
+});
 
 //  Delete Product
 document.getElementById("btnDelElement").addEventListener("click", () => {
