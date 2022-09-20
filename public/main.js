@@ -1,3 +1,7 @@
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
+
 import Product from "../src/product.js";
 import Inventory from "../src/inventory.js";
 
