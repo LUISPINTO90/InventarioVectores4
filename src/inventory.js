@@ -3,125 +3,91 @@ export default class Inventory {
     this.products = [];
   }
 
-  addProduct(product) {
-    this.products.push(product);
-    Swal.fire({
-      customClass: {
-        confirmButton: "swalBtnColor",
-      },
-      title: "AGREGADO CORRECTAMENTE",
-      icon: "success",
-    });
+  searchProduct(code) {
+    let low = 0;
+    let high = this.products.length - 1;
+
+    while (low <= high) {
+      let middle = Math.floor((low + high) / 2);
+      let guess = this.products[middle];
+
+      if (guess.getCode() == code) {
+        return this.products[middle];
+      }
+
+      if (guess.getCode() > code) {
+        high = middle - 1;
+      } else {
+        low = middle + 1;
+      }
+    }
+
+    return false;
   }
 
-  modifyProduct(productCode) {
-    for (let i = 0; i <= this.products.length; i++) {
-      if (productCode === this.products[i].code) {
-        Swal.fire({
-          customClass: {
-            confirmButton: "swalBtnColor",
-          },
-          title: "MODIFICAR PRODUCTO",
-          icon: "question",
-          html: `<input type="text" id="nameProduct" class="swal2-input" placeholder="Nombre del producto">
-          <input type="text" id="quantityProduct" class="swal2-input" placeholder="Cantidad">
-          <input type="text" id="costProduct" class="swal2-input" placeholder="Costo">`,
-          confirmButtonText: "Modificar Producto",
-          focusConfirm: false,
-          preConfirm: () => {
-            let nameProduct =
-              Swal.getPopup().querySelector("#nameProduct").value;
-            let quantityProduct =
-              Swal.getPopup().querySelector("#quantityProduct").value;
-            let costProduct =
-              Swal.getPopup().querySelector("#costProduct").value;
+  addProduct(product) {
+    if (this.searchProduct(product.getCode())) {
+      return false;
+    } else {
+      this.products.push(product);
 
-            if (!nameProduct || !quantityProduct || !costProduct) {
-              Swal.showValidationMessage(
-                `Por favor, ingrese los datos correctamente`
-              );
-            }
+      this.#sortProducts();
+      return true;
+    }
+  }
 
-            this.products[i].name = nameProduct;
-            this.products[i].quantity = quantityProduct;
-            this.products[i].cost = costProduct;
-          },
-        });
+  deleteProduct(code) {
+    if (this.searchProduct(code)) {
+      for (let i = 0; i < this.products.length; i++) {
+        if (code === this.products[i].getCode()) {
+          for (let j = i; j < this.products.length - 1; j++) {
+            this.products[j] = this.products[j + 1];
+          }
+
+          this.products.pop();
+        }
       }
+      return true;
+    } else {
+      return false;
     }
   }
 
   showNormalList() {
-    let component = "";
+    let list = "";
 
-    for (let i = 0; i <= this.products.length - 1; i++) {
-      component += `
-        <section class="cardProduct">
-          <p>C&oacute;digo: ${this.products[i].code}<br>
-          Nombre: ${this.products[i].name}<br>
-          Cantidad: ${this.products[i].quantity}<br>
-          Costo: $${this.products[i].cost}</p>
-        </section>
-      `;
+    if (this.products.length > 0) {
+      for (let i = 0; i < this.products.length; i++) {
+        list += this.products[i].getDetails();
+      }
+    } else {
+      return false;
     }
 
-    return component;
+    return list;
   }
 
   showInverseList() {
-    let component = "";
-    let inverseProducts = [];
-
-    for (let i = this.products.length - 1; i >= 0; i--) {
-      inverseProducts.push(this.products[i]);
-    }
-
-    if (inverseProducts.length > 1) {
-      for (let i = 0; i <= inverseProducts.length - 1; i++) {
-        component += `
-          <section class="cardProduct">
-            <p>C&oacute;digo: ${inverseProducts[i].code}<br>
-            Nombre: ${inverseProducts[i].name}<br>
-            Cantidad: ${inverseProducts[i].quantity}<br>
-            Costo: $${inverseProducts[i].cost}</p>
-          </section>
-        `;
+    let list = "";
+    if (this.products.length > 0) {
+      for (let i = this.products.length - 1; i >= 0; i--) {
+        list += this.products[i].getDetails();
       }
+    } else {
+      return false;
     }
 
-    return component;
+    return list;
   }
 
-  deleteProduct(productCode) {
-    for (let i = 0; i <= this.products.length; i++) {
-      if (productCode === this.products[i].code) {
-        for (let j = i; j < this.products.length - 1; j++) {
-          this.products[j] = this.products[j + 1];
+  #sortProducts() {
+    for (let i = 0; i < this.products.length; i++) {
+      for (let j = 0; j < this.products.length; j++) {
+        if (Number(this.products[i].code) < Number(this.products[j].code)) {
+          let tmp = this.products[i];
+          this.products[i] = this.products[j];
+          this.products[j] = tmp;
         }
-
-        this.products.pop();
-        Swal.fire({
-          customClass: {
-            confirmButton: "swalBtnColor",
-          },
-          title: "ELIMINADO CORRECTAMENTE",
-          icon: "success",
-        });
-      }
-    }
-  }
-
-  searchProduct(productCode) {
-    for (let i = 0; i <= this.products.length; i++) {
-      if (productCode === this.products[i].code) {
-        Swal.fire({
-          customClass: {
-            confirmButton: "swalBtnColor",
-          },
-          title: "Producto",
-          text: `CODIGO: ${this.products[i].code}, PRODUCTO: ${this.products[i].name}, CANTIDAD: ${this.products[i].quantity}, COSTO: ${this.products[i].cost} `,
-          icon: "info",
-        });
       }
     }
   }

@@ -22,18 +22,18 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
-
-    <!-- SweetAlert2 -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body>
-    <main>
-      <article class="title">INVENTARIO DE PRODUCTOS</article>
+    <article class="title">INVENTARIO DE PRODUCTOS</article>
 
+    <main>
       <section class="addProduct">
         <article class="subtitle">AGREGAR</article>
         <form action="#" id="formAdd">
+          <article class="formField">
+            <label>CODIGO <input type="number" id="productCode" /> </label>
+          </article>
           <article class="formField">
             <label>NOMBRE <input type="text" id="productName" /> </label>
           </article>
@@ -56,20 +56,6 @@
           </article>
           <article class="formButton">
             <input type="button" id="btnDelElement" value="ELIMINAR" />
-          </article>
-        </form>
-      </section>
-
-      <section class="modifyProduct">
-        <article class="subtitle">MODIFICAR</article>
-        <form action="#" id="formModify">
-          <article class="formField">
-            <label
-              >CODIGO <input type="text" id="productCodeToModify" />
-            </label>
-          </article>
-          <article class="formButton">
-            <input type="button" id="btnModElement" value="MODIFICAR" />
           </article>
         </form>
       </section>
@@ -99,9 +85,9 @@
         <article id="productList"></article>
       </section>
 
-      <section class="actionsAndSearches">
-        <article class="subtitle">ACCIONES HECHAS</article>
-        <article id="actionsAndSearchesList"></article>
+      <section class="actions">
+        <article class="subtitle">ACCIONES - BUSQUEDAS</article>
+        <article id="actions"></article>
       </section>
     </main>
 
