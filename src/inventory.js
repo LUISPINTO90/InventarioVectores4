@@ -7,6 +7,8 @@ export default class Inventory {
     let low = 0;
     let high = this.products.length - 1;
 
+    code = Number(code);
+
     while (low <= high) {
       let middle = Math.floor((low + high) / 2);
       let guess = this.products[middle];
