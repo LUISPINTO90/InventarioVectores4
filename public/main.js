@@ -42,6 +42,8 @@ document.getElementById("btnAddElement").addEventListener("click", () => {
         </div>
       `;
 
+      console.log(inventory);
+
       document.getElementById("formAdd").reset();
     } else {
       actions.innerHTML += `
@@ -77,6 +79,8 @@ document.getElementById("btnDelElement").addEventListener("click", () => {
       </div>
     `;
 
+      console.log(inventory);
+
       document.getElementById("formDelete").reset();
     } else {
       actions.innerHTML += `
@@ -102,6 +106,8 @@ document.getElementById("btnNormalList").addEventListener("click", () => {
       <p>Se han <b>LISTADO</b> los productos del Inventario</p>
     </div>
     `;
+
+    console.log(inventory);
   } else {
     actions.innerHTML += `
     <div class="error">
@@ -125,6 +131,8 @@ document.getElementById("btnReverseList").addEventListener("click", () => {
       <p>Se han <b>LISTADO de forma INVERSA</b> los productos del Inventario</p>
     </div>
   `;
+
+    console.log(inventory);
   } else {
     actions.innerHTML += `
     <div class="error">
@@ -152,6 +160,8 @@ document.getElementById("btnSearchElement").addEventListener("click", () => {
     
     <p>${product.getDetails()}</p>
     `;
+
+    console.log(inventory);
 
     document.getElementById("formSearch").reset();
   } else {
