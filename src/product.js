@@ -1,13 +1,12 @@
 export default class Product {
   constructor(code, name, quantity, cost) {
-    this.code = code;
+    this.code = Number(code);
     this.name = name;
     this.quantity = quantity;
     this.cost = cost;
-  }
 
-  getCode() {
-    return this.code;
+    this.next = null;
+    this.previous = null;
   }
 
   getDetails() {
